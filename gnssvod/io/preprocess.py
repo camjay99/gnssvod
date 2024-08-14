@@ -80,11 +80,10 @@ def preprocess(filepattern,
     """
     # grab all files matching the patterns
     filelist = get_filelist(filepattern)
-    
     out = dict()
     for item in filelist.items():
         station_name = item[0]
-        filelist = item[1]
+        sub_filelist = item[1]
 
         # checking which files will be skipped (if necessary)
         if (not overwrite) and (outputdir is not None):
@@ -96,7 +95,7 @@ def preprocess(filepattern,
         
         # for each file
         result = []
-        for i,filename in enumerate(filelist):
+        for i,filename in enumerate(sub_filelist):
             # determine the name of the output file that will be saved at the end of the loop
             out_name = os.path.splitext(os.path.basename(filename))[0]+'.nc'
             # if the name of the saved output file is in the files to skip, skip processing

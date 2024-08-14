@@ -362,7 +362,7 @@ def read_obsFile_v2(observationFile,header=False):
         interval = 30
     else:
         interval = epochList[1] - epochList[0]
-        interval = interval.seconds
+        interval = interval.seconds + (interval.microseconds / 1_000_000)
     f.close() # close the file
     #---------------------------------------------------------------------------------------
     finish = time.time()
@@ -553,7 +553,8 @@ def read_obsFile_v3(obsFileName,header):
                                     day = int(epoch_day),
                                     hour = int(epoch_hour),
                                     minute = int(epoch_minute),
-                                    second = int(float(epoch_second)))
+                                    second = int(float(epoch_second)),
+                                    microsecond = int((float(epoch_second) % 1)*1_000_000))
             epochList.append(epoch)
             currentline += 1 # move beyond header line
             # =============================================================================
@@ -677,7 +678,7 @@ def read_obsFile_v3(obsFileName,header):
         interval = 30
     else:
         interval = epochList[1] - epochList[0]
-        interval = interval.seconds
+        interval = interval.seconds + (interval.microseconds / 1_000_000)
     f.close() # close the file
     # =============================================================================
     finish = time.time()     # Time of finish
