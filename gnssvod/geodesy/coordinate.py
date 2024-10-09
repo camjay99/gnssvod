@@ -42,6 +42,10 @@ def cart2ell(x, y, z, ellipsoid = 'GRS80'):
     """
     This function converts 3D cartesian coordinates to geodetic coordinates
     """
+    # If (x, y, z) == (0, 0, 0), the transformation is not well-defined. For not raise an error and Cameron will determine a better strategy in the future.
+    if (x == 0) and (y == 0) and (z == 0):
+        raise ValueError('Cannot convert (0, 0, 0) to unique geodetic coordinates')
+        
     ellipsoid = _ellipsoid(ellipsoid) # create an ellipsoid instance
     lon = _np.arctan2(y,x) # $\lambda = \atan\frac{y}{x}$
     p = _np.sqrt(x**2+ y**2) # $p = \sqrt{x^2+y^2}$
