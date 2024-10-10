@@ -394,11 +394,11 @@ def read_obsFile_v3(obsFileName,header):
             approx_position = [float(i) for i in approx_position]
             line += 1
         elif 'TIME OF FIRST OBS' in obsLines[line]:
-            start_date = obsLines[line][0:obsLines[line].index('TIME')].split()[0:-1]
+            start_date = obsLines[line][0:obsLines[line].index('TIME')].replace('.', ' ').split()[0:-1]
             # Split last entry into seconds and microseconds
-            sec_micsec = start_date[-1]
-            start_date[-1] = int(sec_micsec)
-            start_date.append((sec_micsec % 1) * 1000000)
+            #sec_micsec = start_date[-1]
+            #start_date[-1] = int(sec_micsec)
+            #start_date.append((sec_micsec % 1) * 1000000)
             start_date = datetime.datetime(*np.array(start_date,dtype=float).round().astype(int))
             line += 1
         elif 'TIME OF LAST OBS' in obsLines[line]:
