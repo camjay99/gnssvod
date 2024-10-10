@@ -57,7 +57,7 @@ def cart2ell(x, y, z, ellipsoid = 'GRS80'):
         N = ellipsoid.a / _np.sqrt(1-(ellipsoid.e1**2 * _np.sin(lat_init)**2))
         h = (p / _np.cos(lat_init)) - N
         lat = _np.arctan2(z, (1 - N * ellipsoid.e1**2 / (N + h)) * p)
-        if np.isnan(lat):
+        if _np.isnan(lat):
             raise ValueError(f'N = {N}, h = {h}, x = {x}, y = {y}, z = {z}')
         if _np.abs(lat_init - lat) < 1e-8 and _np.abs(h_init - h) < 1e-8:
             break
