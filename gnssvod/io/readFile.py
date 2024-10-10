@@ -394,11 +394,21 @@ def read_obsFile_v3(obsFileName,header):
             approx_position = [float(i) for i in approx_position]
             line += 1
         elif 'TIME OF FIRST OBS' in obsLines[line]:
-            start_date = obsLines[line][0:obsLines[line].index('TIME')].split()[0:-1]
+            # Format is 
+            # <YEAR> <MONTH> <DAY> <HOUR> <MINUTE> <SECOND>.<DECIMAL> GPS TIME OF FIRST OBS
+            # By replacing . with ' ' we can just split across white space.
+            start_date = obsLines[line][0:obsLines[line].index('TIME')].replace('.', ' ').split()[0:-1]
+            # OBS file record to the tenth of the microsecond. For now, ignore last digit. May need to switch to rounding in the future.
+            start_date[-1] = start_date[-1][:-1]
             start_date = datetime.datetime(*np.array(start_date,dtype=float).round().astype(int))
             line += 1
         elif 'TIME OF LAST OBS' in obsLines[line]:
-            end_date = obsLines[line][0:obsLines[line].index('TIME')].split()[0:-1]
+            # Format is 
+            # <YEAR> <MONTH> <DAY> <HOUR> <MINUTE> <SECOND>.<DECIMAL> GPS TIME OF LAST OBS
+            # By replacing . with ' ' we can just split across white space.
+            end_date = obsLines[line][0:obsLines[line].index('TIME')].replace('.', ' ').split()[0:-1]
+            # OBS file record to the tenth of the microsecond. For now, ignore last digit. May need to switch to rounding in the future.
+            end_date[-1] = end_date[-1][:-1]
             end_date = datetime.datetime(*np.array(end_date,dtype=float).round().astype(int))
             line += 1
         elif 'SYS / # / OBS TYPES' in obsLines[line]:
