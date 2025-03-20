@@ -319,13 +319,14 @@ def get_sp3(sp3_path: str) -> None:
     
     # attempt download
     try:
-        print('Downloading:', zipped_path.name, end = '')
+        print('Downloading:', ftp, end = '')
         with TqdmUpTo(unit='B', unit_scale=True, unit_divisor=1024, miniters=1, desc=zipped_path.name) as t:
             url.urlretrieve(ftp, zipped_path, reporthook=t.update_to)
-        print(' | Download completed for', zipped_path.name)
+        print(' | Download completed for', ftp)
         decompress_on_disk(zipped_path, delete=True)
-    except:
-        print(" | Requested file", zipped_path.name, "cannot be not found!")
+    except Exception as inst:
+        print(inst)
+        print(" | Requested file", ftp, "cannot be not found!")
 
     return
     
