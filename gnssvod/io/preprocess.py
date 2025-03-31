@@ -370,7 +370,7 @@ def gather_stations(filepattern: dict,
                     # add the station data in the iout list
                     iout.append(idata)
                 else:
-                    iout.append(pd.DataFrame())
+                    #iout.append(pd.DataFrame())
                     print(f"No data for station {station_name}.")
                     continue
 
